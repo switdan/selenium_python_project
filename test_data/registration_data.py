@@ -1,3 +1,4 @@
+import csv
 import random
 
 from faker import Faker
@@ -18,3 +19,24 @@ class RegistrationDataGenerator:
         self.month = int(self.__fake.month())
         self.year = int(self.__fake.date_of_birth().year)
         self.password_max_4 = self.__fake.password()[:4]
+
+def get_csv_data(filename):
+    rows = []
+    with open(filename) as csvfile:
+        reader = csv.reader(csvfile)
+
+        next(reader, None)
+
+        for row in reader:
+            rows.append(row)
+        return rows
+
+def get_emails_from_csv(filename):
+    emails = []
+    with open(filename) as csvfile:
+        reader = csv.DictReader(csvfile)
+
+        for row in reader:
+            emails.append(row["Email"].strip())
+
+    return emails

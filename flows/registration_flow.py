@@ -1,4 +1,3 @@
-from pages import create_an_account_page
 from pages.create_an_account_page import CreateAnAccountPage
 from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
@@ -29,3 +28,8 @@ class RegistrationFlow:
         self.create_an_account_page.set_birth_date(day, month, year)
         self.create_an_account_page.submit()
         self.create_an_account_page.wait_for_red_banner()
+
+    def start_registration_with_specific_email(self, email):
+        self.login_page.open()
+        self.login_page.type_new_account_email(email)
+        self.login_page.click_create_account_btn()
