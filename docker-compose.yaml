@@ -1,0 +1,48 @@
+services:
+  mysql:
+    container_name: prestashop-mysql
+    image: mysql:5.7        # MySQL 5.7 is fully compatible with PrestaShop 1.6
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: prestashop
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - prestashop_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-padmin"]
+      interval: 5s
+      retries: 10
+
+  prestashop:
+    container_name: prestashop
+    image: prestashop/prestashop:1.6
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - 8080:80
+    environment:
+      DB_SERVER: prestashop-mysql   # Must match the MySQL service name
+      DB_NAME: prestashop
+      DB_USER: root
+      DB_PASSWD: admin
+      PS_INSTALL_AUTO: 1
+      ADMIN_MAIL: admin@test.com
+      ADMIN_PASSWD: admin123
+      PS_LANGUAGE: en
+      PS_COUNTRY: US
+      PS_DOMAIN: localhost:8080
+    volumes:
+      - prestashop_data:/var/www/html
+    networks:
+      - prestashop_network
+
+networks:
+  prestashop_network:
+
+volumes:
+  mysql_data:
+  prestashop_data:
