@@ -17,12 +17,14 @@ class CreateAnAccountPage(BasePage):
     _MONTH_OF_BIRTH = (By.ID, "months")
     _YEAR_OF_BIRTH = (By.ID, "years")
     _REGISTER_BTN = (By.ID, "submitAccount")
+    _RED_BANNER = (By.XPATH, "//div[@class='alert alert-danger']")
+    _RED_BANNER_2ND_LINE = (By.XPATH, "//div[@class='alert alert-danger']/p")
 
 
     def open(self):
         self._open_url(self._URL)
 
-    def get_h1_title(self) -> str:
+    def h1_title(self) -> str:
         return self.get_text(self._H1_TITLE)
 
     def get_registration_url(self) -> str:
@@ -51,3 +53,10 @@ class CreateAnAccountPage(BasePage):
 
     def wait_for_h1(self):
         self.wait_for_loaded(self._H1_TITLE)
+
+    def red_banner_wrong_pswd(self) -> str:
+        return self.get_text(self._RED_BANNER)
+
+
+    def wait_for_red_banner(self):
+        self.wait_for_loaded(self._RED_BANNER)

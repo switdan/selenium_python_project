@@ -17,3 +17,4 @@ class RegistrationDataGenerator:
         self.day = int(self.__fake.day_of_month())
         self.month = int(self.__fake.month())
         self.year = int(self.__fake.date_of_birth().year)
+        self.password_max_4 = self.__fake.password()[:4]
