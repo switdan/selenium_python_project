@@ -1,5 +1,10 @@
+import os
+import webbrowser
+
 import pytest
 from selenium import webdriver
+
+REPORT_PATH = "reports/report.html"
 
 @pytest.fixture()
 def driver(request):
@@ -18,3 +23,8 @@ def driver(request):
 def pytest_addoption(parser):
     parser.addoption(
         "--browser", action="store", default="chrome", help="browser to execute tests (chrome, firefox)")
+
+def pytest_sessionfinish(session, exitstatus):
+    report = os.path.abspath(REPORT_PATH)
+    if os.path.exists(report):
+        webbrowser.open(f"file://{report}")
