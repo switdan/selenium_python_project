@@ -17,6 +17,7 @@ class CreateAnAccountPage(BasePage):
     _MONTH_OF_BIRTH = (By.ID, "months")
     _YEAR_OF_BIRTH = (By.ID, "years")
     _REGISTER_BTN = (By.ID, "submitAccount")
+    
 
     def open(self):
         super()._open_url(self._URL)
