@@ -1,6 +1,7 @@
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 
 
@@ -13,7 +14,7 @@ class BasePage:
 
     def _wait_until_element_is_visible(self, locator: tuple, time: int = 10):
         wait = WebDriverWait(self._driver, time)
-        wait.until(ec.visibility_of_element_located(locator))
+        wait.until(EC.visibility_of_element_located(locator))
 
     def _open_url(self, url: str):
         self._driver.get(url)
@@ -25,3 +26,21 @@ class BasePage:
     def _type(self, locator: tuple, text: str, time: int = 10):
         self._wait_until_element_is_visible(locator, time)
         self._find(locator).send_keys(text)
+
+    def _select(self, locator: tuple, value, time: int = 10):
+        self._wait_until_element_is_visible(locator, time)
+        Select(self._find(locator)).select_by_value(str(value))
+
+
+    def get_text (self, locator: tuple, time: int = 10) -> str:
+        self._wait_until_element_is_visible(locator, time)
+        return self._find(locator).text
+
+    def wait_for_loaded(self, locator: tuple, time: int = 10):
+        WebDriverWait(self._driver, 10).until(
+            EC.visibility_of_element_located(locator)
+        )
+
+    @property
+    def current_url(self) -> str:
+        return self._driver.current_url
