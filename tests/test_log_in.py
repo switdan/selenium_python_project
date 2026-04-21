@@ -24,7 +24,6 @@ class TestPositiveScenarios:
 class TestNegativeScenarios:
     @pytest.mark.login
     @pytest.mark.negative
-    @pytest.mark.debug
     @pytest.mark.parametrize(
         "email, password, expected_message",
         [
