@@ -20,7 +20,6 @@ class TestProductPage:
 
     @pytest.mark.products
     @pytest.mark.positive
-    @pytest.mark.debug
     def test_product_compare_home_page_quick_view(self, driver):
         flow = ProductsFlow(driver)
         product_quic_view = RandomProductQuickView(driver)

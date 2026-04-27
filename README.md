@@ -29,6 +29,7 @@ pytest -m login          # All login tests
 pytest -m positive       # All positive path tests
 pytest -m negative       # All negative path tests
 pytest -m products       # All product page tests
+pytest -m purchase       # All tests with purchase
 pytest -m debug          # Single test debug mode (no extra reports)
 ```
 
