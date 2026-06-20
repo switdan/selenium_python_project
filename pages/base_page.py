@@ -80,8 +80,15 @@ class BasePage:
 
         :return: Tuple of (product_name, product_price, product_url)
         """
-        products = (By.XPATH, "//li//div[@class='product-container']")
-        products = self._find_all(products)
+
+        products_locator = (By.XPATH, "//li//div[@class='product-container']")
+
+        WebDriverWait(self._driver, 20).until(
+            EC.presence_of_all_elements_located(products_locator)
+        )
+
+        products = self._find_all(products_locator)
+
         seen = set()
         unique_products = []
 
@@ -91,9 +98,16 @@ class BasePage:
                 seen.add(href)
                 unique_products.append(href)
 
+        if not unique_products:
+            raise AssertionError("No products found on home page")
+
         product_url = random.choice(unique_products)
-        product = (By.XPATH,
-                   f"(//a[@class='product-name' and @href='{product_url}']/ancestor::div[@class='product-container'])[1]")
+
+        product = (
+            By.XPATH,
+            f"(//a[@class='product-name' and @href='{product_url}']/ancestor::div[@class='product-container'])[1]"
+        )
+
         product_text = self._find(product).text
         parts = product_text.split("\n")
         product_name = parts[0].strip()
