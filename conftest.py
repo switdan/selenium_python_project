@@ -1,9 +1,20 @@
 import os
+import sys
+import subprocess
 import time
 from pathlib import Path
 
 MAX_WAIT_SECONDS = 10
 CHECK_INTERVAL = 0.5
+
+
+def open_report(path: Path):
+    if sys.platform.startswith("win"):
+        os.startfile(path)
+    elif sys.platform.startswith("linux"):
+        subprocess.run(["xdg-open", str(path)], check=False)
+    elif sys.platform == "darwin":
+        subprocess.run(["open", str(path)], check=False)
 
 
 def pytest_unconfigure(config):
@@ -26,6 +37,6 @@ def pytest_unconfigure(config):
 
     while time.time() < timeout:
         if path.exists():
-            os.startfile(path)
+            open_report(path)
             return
         time.sleep(CHECK_INTERVAL)
