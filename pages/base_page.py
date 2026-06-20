@@ -49,7 +49,14 @@ class BasePage:
 
     def _hover(self, locator: tuple, time: int = 10):
         self._wait_until_element_is_visible(locator, time)
-        ActionChains(self._driver).move_to_element(self._find(locator)).perform()
+        element = self._find(locator)
+
+        self._driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center'});",
+            element
+        )
+
+        ActionChains(self._driver).move_to_element(element).perform()
 
     def _switch_to_iframe(self, locator: tuple, time: int = 10):
         self._wait_until_element_is_visible(locator, time)
