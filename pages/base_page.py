@@ -16,38 +16,34 @@ class BasePage:
     def _find(self, locator: tuple) -> WebElement:
         return self._driver.find_element(*locator)
 
-    def _wait_until_element_is_visible(self, locator: tuple, time: int = 10):
+    def _wait_until_element_is_visible(self, locator: tuple, time: int = 20):
         wait = WebDriverWait(self._driver, time)
         wait.until(EC.visibility_of_element_located(locator))
 
     def _open_url(self, url: str):
         self._driver.get(url)
 
-    def _click(self, locator: tuple, time: int = 10):
+    def _click(self, locator: tuple, time: int = 20):
         self.wait_for_loaded(locator, time)
         self._find(locator).click()
 
-    def _type(self, locator: tuple, text: str, time: int = 10):
+    def _type(self, locator: tuple, text: str, time: int = 20):
         self._wait_until_element_is_visible(locator, time)
         self._find(locator).send_keys(text)
 
-    def _select(self, locator: tuple, value, time: int = 20):
-        element = WebDriverWait(self._driver, time).until(
-            EC.presence_of_element_located(locator)
-        )
+    def _select(self, locator: tuple[str, str], value, time: int = 20):
+        element = WebDriverWait(self._driver, time).until(EC.presence_of_element_located(locator))
         Select(element).select_by_value(str(value))
 
 
-    def get_text (self, locator: tuple, time: int = 10) -> str:
+    def get_text (self, locator: tuple, time: int = 20) -> str:
         self._wait_until_element_is_visible(locator, time)
         return self._find(locator).text
 
-    def wait_for_loaded(self, locator: tuple, time: int = 10):
-        WebDriverWait(self._driver, time).until(
-            EC.visibility_of_element_located(locator)
-        )
+    def wait_for_loaded(self, locator: tuple[str, str], time: int = 20):
+        WebDriverWait(self._driver, time).until(EC.visibility_of_element_located(locator))
 
-    def _hover(self, locator: tuple, time: int = 10):
+    def _hover(self, locator: tuple, time: int = 20):
         self._wait_until_element_is_visible(locator, time)
         element = self._find(locator)
 
@@ -58,7 +54,7 @@ class BasePage:
 
         ActionChains(self._driver).move_to_element(element).perform()
 
-    def _switch_to_iframe(self, locator: tuple, time: int = 10):
+    def _switch_to_iframe(self, locator: tuple, time: int = 20):
         self._wait_until_element_is_visible(locator, time)
         self._driver.switch_to.frame(self._find(locator))
 
@@ -66,7 +62,7 @@ class BasePage:
     def current_url(self) -> str:
         return self._driver.current_url
 
-    def wait_for_page(self, text: str, time: int = 10) -> bool:
+    def wait_for_page(self, text: str, time: int = 20) -> bool:
         WebDriverWait(self._driver, time).until(EC.url_contains(text))
         return text in self._driver.current_url
 

@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 
 from pages.base_page import BasePage
@@ -7,8 +9,8 @@ class CreateAnAccountPage(BasePage):
     _URL = "https://automationpractice.techwithjatin.com/login?back=my-account#account-creation"
 
     _H1_TITLE = (By.XPATH, "//h1[text()='Create an account']")
-    _TITLE_GENDER_MALE = (By.ID, "id_gender1")
-    _TITLE_GENDER_FEMALE = (By.ID, "id_gender2")
+    _TITLE_GENDER_MALE = (By.XPATH, "//label[@for='id_gender1']")
+    _TITLE_GENDER_FEMALE = (By.XPATH, "//label[@for='id_gender2']")
     _FIRST_NAME = (By.ID, "customer_firstname")
     _LAST_NAME = (By.ID, "customer_lastname")
     _MAIL = (By.ID, "email")

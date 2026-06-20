@@ -1,3 +1,5 @@
+import time
+
 import pytest
 
 from flows.registration_flow import RegistrationFlow
