@@ -1,5 +1,6 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 REPORT_PATH = "reports/report.html"
 
@@ -15,9 +16,13 @@ def driver(request):
     browser = request.config.getoption("--browser")
     print(f"Creating {browser} driver...")
     if browser == "chrome":
-        my_driver = webdriver.Chrome()
+        options = Options()
+        options.add_argument("--window-size=1920,1080")
+        my_driver = webdriver.Chrome(options=options)
     elif browser == "firefox":
         my_driver = webdriver.Firefox()
+        my_driver.set_window_size(1920, 1080)
+
     else:
         raise Exception(f"Invalid browser. Expected 'chrome' or 'firefox', but got {browser}")
     yield my_driver
