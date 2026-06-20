@@ -24,7 +24,7 @@ class BasePage:
         self._driver.get(url)
 
     def _click(self, locator: tuple, time: int = 10):
-        self._wait_until_element_is_visible(locator, time)
+        self.wait_for_loaded(locator, time)
         self._find(locator).click()
 
     def _type(self, locator: tuple, text: str, time: int = 10):
