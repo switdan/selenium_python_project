@@ -15,9 +15,10 @@ class RegistrationDataGenerator:
             self.last_name = self.__fake.last_name_female()
         self.email = self.__fake.email()
         self.password = self.__fake.password()
-        self.day = int(self.__fake.day_of_month())
-        self.month = int(self.__fake.month())
-        self.year = int(self.__fake.date_of_birth().year)
+        birth_date = self.__fake.date_of_birth(minimum_age=18, maximum_age=80)
+        self.day = birth_date.day
+        self.month = birth_date.month
+        self.year = birth_date.year
         self.password_max_4 = self.__fake.password()[:4]
 
 def get_login_data(filename):
