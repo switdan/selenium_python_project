@@ -27,7 +27,7 @@ class Order(BasePage):
         self._click(self._PROCEED_TO_CHECKOUT_BTN_SHIPPING_SECTION)
 
     def product_price(self) -> str:
-        return self.get_text(self._PRODUCT_PRICE_LOCATOR)
+        return self.get_text(self._PRODUCT_PRICE_LOCATOR).splitlines()[0].strip()
 
     def product_name(self) -> str:
         return self.get_text(self._PRODUCT_NAME_LOCATOR)
