@@ -31,9 +31,11 @@ class BasePage:
         self._wait_until_element_is_visible(locator, time)
         self._find(locator).send_keys(text)
 
-    def _select(self, locator: tuple, value, time: int = 10):
-        self._wait_until_element_is_visible(locator, time)
-        Select(self._find(locator)).select_by_value(str(value))
+    def _select(self, locator: tuple, value, time: int = 20):
+        element = WebDriverWait(self._driver, time).until(
+            EC.presence_of_element_located(locator)
+        )
+        Select(element).select_by_value(str(value))
 
 
     def get_text (self, locator: tuple, time: int = 10) -> str:
