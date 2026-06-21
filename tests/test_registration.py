@@ -1,5 +1,3 @@
-import time
-
 import pytest
 
 from flows.registration_flow import RegistrationFlow
@@ -45,6 +43,3 @@ class TestNegativeScenarios:
         flow.start_registration(data.email)
         flow.registration_with_wrong_password(data.gender, data.first_name, data.last_name, data.password_max_4, data.day, data.month, data.year)
         assert flow.create_an_account_page.red_banner_wrong_pswd() == ExpectedMessages.PASSWORD_IS_INVALID, "Red banner text didn't match"
-
-
-

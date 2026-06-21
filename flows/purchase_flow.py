@@ -1,7 +1,6 @@
 import time
 
 from pages.home_page import HomePage
-from pages.login_page import LoginPage
 from pages.order_page import Order
 from pages.random_product_page import RandomProductPage
 
@@ -30,5 +29,3 @@ class PurchaseFlow:
         self.order_page.click_proceed_to_checkout_in_address_section()
         self.order_page.click_therms_of_service()
         self.order_page.click_proceed_to_checkout_in_shipping_section()
-
-

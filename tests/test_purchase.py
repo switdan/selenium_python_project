@@ -1,5 +1,3 @@
-import time
-
 import pytest
 
 from flows.log_in_flow import LogInFlow
